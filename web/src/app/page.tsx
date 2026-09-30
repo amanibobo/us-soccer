@@ -30,7 +30,13 @@ export default async function Landing() {
         </header>
 
         {/* hero */}
-        <div className="fade-up aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#161618] shadow-2xl shadow-black/40" />
+        <div className="fade-up w-full overflow-hidden rounded-2xl border border-white/10 bg-[#161618] shadow-2xl shadow-black/40">
+          {site.heroVideo ? (
+            <video src={site.heroVideo} controls playsInline preload="metadata" className="block aspect-video w-full bg-black" aria-label={`${site.name} tutorial video`} />
+          ) : (
+            <div className="aspect-[16/10] w-full" />
+          )}
+        </div>
 
         {/* letter */}
         <section className="mt-10 space-y-4 text-[15px] leading-relaxed text-muted">
