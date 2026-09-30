@@ -1,11 +1,8 @@
 import Link from "next/link";
 import { site, youtubeEmbedUrl } from "@/config/site";
-import { loadPreviewServer } from "@/lib/matches-server";
-import { HeroPreview } from "@/components/HeroPreview";
 import { GithubIcon, PlayIcon } from "@/components/icons";
 
 export default async function Landing() {
-  const preview = await loadPreviewServer(site.defaultMatch);
   const video = youtubeEmbedUrl(site.tutorialVideo);
   const team = site.team.filter((t) => t.name);
   const appHref = `/match/${site.defaultMatch}`;
@@ -30,9 +27,7 @@ export default async function Landing() {
         </header>
 
         {/* hero */}
-        <div className="fade-up overflow-hidden rounded-2xl border border-white/10 bg-[#161618] shadow-2xl shadow-black/40">
-          <HeroPreview frame={preview} />
-        </div>
+        <div className="fade-up aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#161618] shadow-2xl shadow-black/40" />
 
         {/* letter */}
         <section className="mt-14 space-y-6 text-[19px] leading-relaxed text-muted">
