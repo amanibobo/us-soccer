@@ -53,6 +53,16 @@ export default async function Landing() {
           </p>
         </section>
 
+        {/* how it works */}
+        <section className="mt-10">
+          <p className="text-[15px] font-medium text-text">How it works</p>
+          <p className="mt-1 text-[13px] text-muted">One-time preprocessing turns a 90 MB match into a 4.5 MB bundle. The browser downloads it once, then everything is instant.</p>
+          <a href="/architecture.png" target="_blank" rel="noreferrer" className="mt-4 block overflow-hidden rounded-2xl border border-white/10 bg-[#161618]" title="Open the diagram full size">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/architecture-dark.png" alt="Architecture: SkillCorner files go through a Python pipeline into a compact bundle, which the Next.js app loads once and renders on a canvas; clips are encoded in their links." className="block w-full" />
+          </a>
+        </section>
+
         {/* buttons */}
         <div className="mt-8 mb-16 flex flex-wrap gap-2.5">
           <Link href={appHref} className="pill pill-primary">

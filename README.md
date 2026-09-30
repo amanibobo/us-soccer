@@ -43,6 +43,10 @@ Refresh the page. The landing page lists every bundle it finds and the match pic
 
 ## Architecture
 
+![Architecture diagram](docs/architecture.png)
+
+The diagram is an Excalidraw file, [docs/architecture.excalidraw](docs/architecture.excalidraw). Open it at excalidraw.com to edit, regenerate it with `python docs/architecture.py`, and re-render the images with `node docs/render_architecture.js`.
+
 ```
 SkillCorner raw files (90 MB tracking JSONL + match JSON + events CSV + phases CSV)
         │

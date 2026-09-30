@@ -220,7 +220,47 @@ export function Scrubber({ onPlayClip }: Props) {
         ))}
         <span className="absolute right-0">Full time</span>
       </div>
+
+      {/* key */}
+      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border pt-2 text-[11px] text-muted">
+        <span className="font-medium tracking-wide text-faint uppercase">Key</span>
+        <KeyItem label={meta.home.short_name}>
+          <span className="h-2.5 w-2.5 rounded-full" style={{ background: tone(meta.home.color) }} />
+        </KeyItem>
+        <KeyItem label={meta.away.short_name}>
+          <span className="h-2.5 w-2.5 rounded-full" style={{ background: tone(meta.away.color) }} />
+        </KeyItem>
+        <KeyItem label="Goal">
+          <span className="flex h-3 w-3 items-center justify-center rounded-full bg-white ring-2 ring-ink/60">
+            <span className="h-1.5 w-1.5 rounded-full bg-ink" />
+          </span>
+        </KeyItem>
+        <KeyItem label="Shot">
+          <span className="h-2.5 w-[3px] rounded-full bg-ink/60" />
+        </KeyItem>
+        <KeyItem label="Clip">
+          <span className="h-2 w-4 rounded-[3px] bg-accent/85" />
+        </KeyItem>
+        <KeyItem label="No tracking">
+          <span className="hatch h-2.5 w-4 rounded-[3px] bg-surface-3" />
+        </KeyItem>
+        <span className="h-3 w-px bg-border" />
+        {(["build_up", "create", "finish", "transition", "set_play"] as const).map((k) => (
+          <KeyItem key={k} label={PHASE_LABELS[k]}>
+            <span className="h-1.5 w-3 rounded-full" style={{ background: PHASE_COLORS[k] }} />
+          </KeyItem>
+        ))}
+      </div>
     </div>
+  );
+}
+
+function KeyItem({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      {children}
+      {label}
+    </span>
   );
 }
 
