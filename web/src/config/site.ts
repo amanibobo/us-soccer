@@ -19,7 +19,7 @@ export const site = {
     { name: "Teammate 4", github: "", role: "" },
     { name: "Teammate 5", github: "", role: "" },
   ],
-  repo: "https://github.com/amanibobo/touchline",
+  repo: "https://github.com/amanibobo/us-soccer",
   dataCredit: { name: "SkillCorner open data", url: "https://github.com/SkillCorner/opendata" },
 };
 
