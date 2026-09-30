@@ -49,10 +49,6 @@ export default async function Landing() {
             and <b className="text-text">End clip</b> around any moment up to ten seconds, give it a title and tags, and share it with one link. A coach opens
             the link and it just plays.
           </p>
-          <p>
-            One more thing, on purpose: any SkillCorner match loads by changing a single match ID. No code changes. The tool is about the data format, not
-            one game.
-          </p>
         </section>
 
         {/* buttons */}
