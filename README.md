@@ -4,7 +4,7 @@
 
 Built for the US Soccer x GSU ColorStack Tech League. Tracking data by [SkillCorner open data](https://github.com/SkillCorner/opendata) (MIT). Player photos from Wikimedia Commons under their individual licenses (credits in `web/src/config/players.json`). Club crests belong to the clubs and are used only to identify the teams.
 
-> Live site: _coming soon_ · Tutorial video: _coming soon_
+> Live site: https://larpers-drab.vercel.app · Tutorial video: _coming soon_
 
 ## How to use it
 

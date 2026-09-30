@@ -7,7 +7,7 @@ export const site = {
   description:
     "larpers plays a full match of SkillCorner tracking data on a 2D pitch. Scrub it like YouTube, cut any moment into a 10-second clip, tag it, and share it with one link. Built for the US Soccer x GSU ColorStack Tech League.",
   /** Full URL of the deployed site. Used for share links and metadata. */
-  url: "https://larpers.vercel.app",
+  url: "https://larpers-drab.vercel.app",
   /** YouTube link or ID of the tutorial. Leave empty to hide the video block. */
   tutorialVideo: "",
   /** Default match to open from the "Open the app" button. */
