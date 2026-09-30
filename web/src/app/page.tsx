@@ -84,7 +84,7 @@ export default async function Landing() {
               allowFullScreen
             />
           ) : (
-            <div className="aspect-video w-full" />
+            <HeroPreview frame={preview} />
           )}
         </div>
       </div>
