@@ -32,7 +32,7 @@ export default async function Landing() {
         {/* hero */}
         <div className="fade-up w-full overflow-hidden rounded-2xl border border-white/10 bg-[#161618] shadow-2xl shadow-black/40">
           {site.heroVideo ? (
-            <video src={site.heroVideo} controls playsInline preload="metadata" className="block aspect-video w-full bg-black" aria-label={`${site.name} tutorial video`} />
+            <video src={site.heroVideo} controls playsInline preload="metadata" className="block w-full bg-black" style={{ aspectRatio: "1660 / 1080" }} aria-label={`${site.name} tutorial video`} />
           ) : (
             <div className="aspect-[16/10] w-full" />
           )}
