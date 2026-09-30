@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { site, youtubeEmbedUrl } from "@/config/site";
-import { loadMatchIndexServer, loadPreviewServer } from "@/lib/matches-server";
+import { loadPreviewServer } from "@/lib/matches-server";
 import { HeroPreview } from "@/components/HeroPreview";
-import { ArrowRightIcon, GithubIcon, PlayIcon } from "@/components/icons";
+import { GithubIcon, PlayIcon } from "@/components/icons";
 
 export default async function Landing() {
-  const [matches, preview] = await Promise.all([loadMatchIndexServer(), loadPreviewServer(site.defaultMatch)]);
+  const preview = await loadPreviewServer(site.defaultMatch);
   const video = youtubeEmbedUrl(site.tutorialVideo);
   const team = site.team.filter((t) => t.name);
   const appHref = `/match/${site.defaultMatch}`;
@@ -61,7 +61,6 @@ export default async function Landing() {
             One more thing, on purpose: any SkillCorner match loads by changing a single match ID. No code changes. The tool is about the data format, not
             one game.
           </p>
-          <p>That&apos;s all. We hope you like it.</p>
         </section>
 
         {/* buttons */}
@@ -74,87 +73,20 @@ export default async function Landing() {
           </a>
         </div>
 
-        {/* tutorial */}
-        <section id="tutorial" className="mt-20 scroll-mt-8">
-          <h2 className="text-[19px] font-medium text-text">How to use it</h2>
-          <p className="mt-1 text-[15px] text-muted">A short walkthrough for first-time users.</p>
-          <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-[#161618]">
-            {video ? (
-              <iframe
-                src={video}
-                title={`${site.name} tutorial`}
-                className="aspect-video w-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div className="flex aspect-video w-full items-center justify-center text-sm text-muted">Tutorial video coming soon</div>
-            )}
-          </div>
-        </section>
-
-        {/* team */}
-        <section id="team" className="mt-20 scroll-mt-8">
-          <h2 className="text-[19px] font-medium text-text">The team</h2>
-          <ul className="mt-5 divide-y divide-white/10 border-y border-white/10">
-            {team.map((t) => (
-              <li key={t.name}>
-                <a
-                  href={t.github ? `https://github.com/${t.github}` : "#"}
-                  target={t.github ? "_blank" : undefined}
-                  rel="noreferrer"
-                  className="flex items-center gap-4 py-3.5 text-[15px] transition-colors hover:text-text"
-                >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-xs font-semibold">{initials(t.name)}</span>
-                  <span className="font-medium text-text">{t.name}</span>
-                  {t.role && <span className="text-muted">{t.role}</span>}
-                  <span className="ml-auto inline-flex items-center gap-1.5 text-muted">
-                    <GithubIcon width={15} height={15} /> {t.github ? `@${t.github}` : "GitHub"}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* matches */}
-        {matches.length > 0 && (
-          <section className="mt-20">
-            <h2 className="text-[19px] font-medium text-text">Matches loaded</h2>
-            <ul className="mt-5 divide-y divide-white/10 border-y border-white/10">
-              {matches.map((m) => (
-                <li key={m.match_id}>
-                  <Link href={`/match/${m.match_id}`} className="flex items-center gap-4 py-3.5 text-[15px] text-muted transition-colors hover:text-text">
-                    <span className="flex gap-1">
-                      <span className="h-3.5 w-3.5 rounded-full border border-white/20" style={{ background: m.home.color }} />
-                      <span className="h-3.5 w-3.5 rounded-full border border-white/20" style={{ background: m.away.color }} />
-                    </span>
-                    <span className="text-text">
-                      {m.home.short_name}{" "}
-                      <span className="font-mono">
-                        {m.home.score} - {m.away.score}
-                      </span>{" "}
-                      {m.away.short_name}
-                    </span>
-                    <span className="ml-auto text-sm">{m.date ? new Date(m.date).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" }) : ""}</span>
-                    <ArrowRightIcon width={16} height={16} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <footer className="mt-20 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 py-8 text-sm text-muted">
-          <span>
-            Tracking data by{" "}
-            <a href={site.dataCredit.url} target="_blank" rel="noreferrer" className="underline decoration-white/30 underline-offset-4 hover:text-text">
-              {site.dataCredit.name}
-            </a>
-            , MIT licensed.
-          </span>
-          <span>{site.name}</span>
-        </footer>
+        {/* video placeholder */}
+        <div id="tutorial" className="mt-14 mb-20 scroll-mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#161618]">
+          {video ? (
+            <iframe
+              src={video}
+              title={`${site.name} tutorial`}
+              className="aspect-video w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <div className="aspect-video w-full" />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -179,12 +111,3 @@ function Logo() {
   );
 }
 
-function initials(name: string): string {
-  return name
-    .split(/\s+/)
-    .map((p) => p[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
-}
