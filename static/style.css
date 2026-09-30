@@ -1,0 +1,193 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 20px;
+  background: #f4f4f4;
+}
+
+#layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+#viewer {
+  flex: 1;
+  max-width: 1000px;
+}
+
+canvas {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+}
+
+#controls,
+#clip-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#slider {
+  flex: 1;
+  margin: 0;
+  appearance: none;
+  height: 6px;
+  background: #ccc;
+  border-radius: 3px;
+}
+
+/* Fixed-size thumb so timeline markers can line up with the slider exactly:
+   the thumb centre travels from THUMB/2 to (width - THUMB/2). */
+#slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  cursor: pointer;
+}
+
+#slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: #1a1a1a;
+  cursor: pointer;
+}
+
+#timeline {
+  margin-top: 6px;
+}
+
+.lane-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3px;
+}
+
+.lane-label {
+  font-size: 12px;
+  color: #444;
+  text-align: right;
+}
+
+.lane {
+  position: relative;
+  flex: 1;
+  height: 16px;
+  background: #e6e6e3;
+  border-radius: 3px;
+  margin: 0 7px; /* half the slider thumb, so markers sit under the thumb's path */
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  width: 11px; /* hit target wider than the visible mark */
+  height: 100%;
+  margin-left: -5.5px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.marker::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color);
+}
+
+.marker:hover::before,
+.marker:focus-visible::before {
+  left: 2.5px;
+  width: 6px;
+}
+
+.marker.goal::before {
+  top: -3px;
+  bottom: -3px;
+  left: 2.5px;
+  width: 6px;
+  box-shadow: 0 0 0 2px #e6e6e3;
+}
+
+#tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+  z-index: 10;
+}
+
+/* The play button and clock share widths with the timeline's labels and spacer
+   so the slider and the event lanes are exactly the same width. */
+#play,
+.lane-label {
+  width: 130px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+#clock,
+.lane-spacer {
+  width: 110px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#message {
+  margin-top: 8px;
+  min-height: 1.2em;
+  color: #b00;
+}
+
+#sidebar {
+  width: 300px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+#sidebar h2 {
+  margin-top: 0;
+}
+
+#clips {
+  list-style: none;
+  padding: 0;
+}
+
+#clips li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#clips li .time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+#clips li button {
+  margin-top: 4px;
+  margin-right: 4px;
+}

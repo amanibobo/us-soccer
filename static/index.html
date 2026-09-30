@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tracking Data Viewer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1 id="title">Loading...</h1>
+
+  <div id="layout">
+    <div id="viewer">
+      <canvas id="pitch"></canvas>
+
+      <div id="controls">
+        <button id="play">Play</button>
+        <input id="slider" type="range" min="0" value="0">
+        <span id="clock">--:--</span>
+      </div>
+
+      <!-- Key moments from the match's event data, one lane per type. Filled by app.js. -->
+      <div id="timeline"></div>
+      <div id="tooltip" hidden></div>
+
+      <div id="clip-controls">
+        <button id="mark-in">Set clip start</button>
+        <button id="mark-out">Set clip end</button>
+        <span id="clip-range">No clip selected</span>
+        <input id="clip-name" type="text" placeholder="Clip name">
+        <button id="save-clip" disabled>Save clip</button>
+      </div>
+      <div id="message"></div>
+    </div>
+
+    <div id="sidebar">
+      <h2>Clips</h2>
+      <p id="now-playing"></p>
+      <ul id="clips"></ul>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
