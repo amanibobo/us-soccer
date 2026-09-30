@@ -62,6 +62,23 @@ canvas {
   margin-top: 6px;
 }
 
+/* While a clip is recording for download, lock everything that could change the frame */
+body.recording #timeline,
+body.recording #view-options,
+body.recording #clip-controls,
+body.recording #clips {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+#view-options {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 .lane-row {
   display: flex;
   align-items: center;
