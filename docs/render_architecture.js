@@ -39,7 +39,7 @@ const OUT_WEB_DARK = path.join(HERE, "..", "web", "public", "architecture-dark.p
     const svg = await mod.exportToSvg(opts);
     const png = await toB64(await mod.exportToBlob({ ...opts, mimeType: "image/png", getDimensions: dims }));
     const dark = await toB64(
-      await mod.exportToBlob({ ...opts, appState: { ...opts.appState, exportWithDarkMode: true, viewBackgroundColor: "#161618" }, mimeType: "image/png", getDimensions: dims }),
+      await mod.exportToBlob({ ...opts, appState: { ...opts.appState, exportWithDarkMode: true, viewBackgroundColor: "#f4f4f4" }, mimeType: "image/png", getDimensions: dims }),
     );
     return { svg: new XMLSerializer().serializeToString(svg), png, dark };
   }, doc);

@@ -29,6 +29,9 @@ export function MatchHeader({ meta, overlays, skipGaps, onOverlay, onSkipGaps, o
       </Link>
 
       <span className="h-5 w-px bg-border" />
+      <Link href="/matches" className="btn btn-ghost btn-sm -ml-2" title="Choose a different match">
+        All matches
+      </Link>
 
       {/* scoreboard */}
       <div className="flex items-center gap-3">

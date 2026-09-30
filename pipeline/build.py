@@ -405,8 +405,9 @@ def write_index(data_dir: Path) -> None:
                 "match_id": m["match_id"],
                 "date": m.get("date"),
                 "competition": m.get("competition"),
-                "home": {"name": m["home"]["name"], "short_name": m["home"]["short_name"], "score": m["home"]["score"], "color": m["home"]["color"]},
-                "away": {"name": m["away"]["name"], "short_name": m["away"]["short_name"], "score": m["away"]["score"], "color": m["away"]["color"]},
+                "stadium": m.get("stadium"),
+                "home": {"id": m["home"]["id"], "name": m["home"]["name"], "short_name": m["home"]["short_name"], "score": m["home"]["score"], "color": m["home"]["color"]},
+                "away": {"id": m["away"]["id"], "name": m["away"]["name"], "short_name": m["away"]["short_name"], "score": m["away"]["score"], "color": m["away"]["color"]},
             }
         )
     (data_dir / "index.json").write_text(json.dumps({"matches": matches}, separators=(",", ":")))

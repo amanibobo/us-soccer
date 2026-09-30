@@ -110,12 +110,21 @@ export interface Phase {
   y1: number;
 }
 
+export interface MatchIndexTeam {
+  id: number;
+  name: string;
+  short_name: string;
+  score: number | null;
+  color: string;
+}
+
 export interface MatchIndexEntry {
   match_id: number;
   date: string | null;
   competition: string | null;
-  home: { name: string; short_name: string; score: number | null; color: string };
-  away: { name: string; short_name: string; score: number | null; color: string };
+  stadium?: string | null;
+  home: MatchIndexTeam;
+  away: MatchIndexTeam;
 }
 
 /** Everything the editor needs for one match, held in memory. */

@@ -10,7 +10,7 @@ MATCH ?= 2006229
 RAW   := data/raw/$(MATCH)
 OUT   := web/public/data/$(MATCH)
 
-.PHONY: data fetch build dev test clean
+.PHONY: data fetch build dev test clean headshots crests
 
 data: fetch build
 
@@ -31,3 +31,6 @@ clean:
 
 headshots:
 	uv run --directory pipeline python headshots.py $(patsubst %,../%,$(wildcard web/public/data/*/meta.json)) --out ../web/public/players --index ../web/src/config/players.json
+
+crests:
+	uv run --directory pipeline python crests.py $(patsubst %,../%,$(wildcard web/public/data/*/meta.json)) --out ../web/public/logos --index ../web/src/config/logos.json
