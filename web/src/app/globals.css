@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f5f5f4;
+  --surface: #ffffff;
+  --surface-2: #f4f4f3;
+  --surface-3: #ebebea;
+  --border: #e6e6e4;
+  --border-strong: #d6d6d3;
+  --text: #1c1c1a;
+  --muted: #6f6f6a;
+  --faint: #a3a39d;
+  --ink: #1c1c1a;
+  --ink-hover: #333330;
+  --accent: #2f6fed;
+  --accent-hover: #245ed1;
+  --accent-soft: #e6eefc;
+  --clip: #f0a020;
+  --clip-soft: #fdf1dc;
+  --danger: #d4462f;
+  --danger-soft: #fbe9e5;
+  --ok: #2f8f5b;
+  --pitch: #4f8c5e;
+  --radius: 12px;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-ink: var(--ink);
+  --color-ink-hover: var(--ink-hover);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-clip: var(--clip);
+  --color-clip-soft: var(--clip-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ok: var(--ok);
+  --color-pitch: var(--pitch);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --radius-card: var(--radius);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+.btn {
+  @apply inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-surface px-3 text-[13px] font-medium text-text shadow-[0_1px_0_rgba(0,0,0,0.03)] transition-[background-color,border-color,color,box-shadow] duration-150 select-none;
+}
+.btn:hover:not(:disabled) {
+  @apply border-border-strong bg-surface-2;
+}
+.btn:active:not(:disabled) {
+  @apply bg-surface-3 shadow-none;
+}
+.btn:disabled {
+  @apply cursor-not-allowed opacity-45 shadow-none;
+}
+.btn:focus-visible {
+  @apply outline-2 outline-offset-2 outline-accent;
+}
+
+.btn-primary {
+  @apply border-ink bg-ink text-white shadow-none;
+}
+.btn-primary:hover:not(:disabled) {
+  @apply border-ink-hover bg-ink-hover;
+}
+.btn-primary:active:not(:disabled) {
+  @apply bg-ink;
+}
+
+.btn-accent {
+  @apply border-accent bg-accent text-white shadow-none;
+}
+.btn-accent:hover:not(:disabled) {
+  @apply border-accent-hover bg-accent-hover;
+}
+
+.btn-ghost {
+  @apply border-transparent bg-transparent text-muted shadow-none;
+}
+.btn-ghost:hover:not(:disabled) {
+  @apply border-transparent bg-surface-3 text-text;
+}
+
+.btn-icon {
+  @apply w-9 px-0;
+}
+.btn-sm {
+  @apply h-7 gap-1 px-2 text-xs;
+}
+.btn-sm.btn-icon {
+  @apply w-7;
+}
+.btn-lg {
+  @apply h-10 px-4 text-sm;
+}
+
+/* pressed toggle */
+.btn-on {
+  @apply border-ink bg-ink text-white shadow-none;
+}
+.btn-on:hover:not(:disabled) {
+  @apply border-ink-hover bg-ink-hover;
+}
+
+/* segmented control */
+.seg {
+  @apply inline-flex h-9 items-stretch overflow-hidden rounded-lg border border-border bg-surface p-0.5;
+}
+.seg > button {
+  @apply rounded-md px-2.5 text-[13px] font-medium text-muted transition-colors;
+}
+.seg > button:hover {
+  @apply text-text;
+}
+.seg > button[aria-pressed="true"],
+.seg > button[data-on="true"] {
+  @apply bg-ink text-white;
+}
+.seg-sm {
+  @apply h-8;
+}
+.seg-sm > button {
+  @apply px-2 text-xs;
+}
+
+/* ---------------------------------------------------------------- inputs */
+
+.input {
+  @apply h-9 w-full rounded-lg border border-border bg-surface px-3 text-[13px] text-text placeholder:text-faint transition-[border-color,box-shadow];
+}
+.input:focus {
+  @apply border-border-strong outline-none ring-3 ring-ink/10;
+}
+
+.kbd {
+  @apply inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-[5px] border border-border-strong bg-surface px-1 font-mono text-[10.5px] leading-none text-muted;
+}
+.btn-primary .kbd,
+.btn-on .kbd {
+  @apply border-white/25 bg-white/10 text-white/80;
+}
+
+.card {
+  @apply rounded-[var(--radius)] border border-border bg-surface;
+}
+
+.chip {
+  @apply inline-flex h-6 items-center rounded-full bg-surface-3 px-2 text-[11px] font-medium text-muted;
+}
+
+.overlay-pill {
+  @apply flex items-center gap-2 rounded-lg bg-black/60 px-3 py-1.5 text-xs text-white shadow-lg backdrop-blur-sm;
+}
+.overlay-pill button {
+  @apply rounded-md bg-white/15 px-1.5 py-0.5 hover:bg-white/25;
+}
+
+/* timeline hatch for stretches without tracking */
+.hatch {
+  background-image: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.14) 0 3px, transparent 3px 7px);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fade-up 0.25s ease-out both;
+}
+
+/* Dark variant, used by the landing page. The editor stays light. */
+.theme-dark {
+  --bg: #0d0d0e;
+  --surface: #161618;
+  --surface-2: #1f1f22;
+  --surface-3: #27272a;
+  --border: #27272a;
+  --border-strong: #3f3f46;
+  --text: #f4f4f5;
+  --muted: #a1a1aa;
+  --faint: #71717a;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-soft: #1e3a8a;
+}
+
+.pill {
+  @apply inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-text transition-colors select-none;
+}
+.pill:hover {
+  @apply bg-white/15;
+}
+.pill-primary {
+  @apply bg-white text-zinc-900;
+}
+.pill-primary:hover {
+  @apply bg-zinc-200;
+}
