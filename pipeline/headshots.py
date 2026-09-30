@@ -25,7 +25,14 @@ FOOTBALLER = "Q937857"
 
 
 def wd(params: dict) -> dict:
-    r = S.get("https://www.wikidata.org/w/api.php", params={**params, "format": "json"}, timeout=30)
+    # Wikidata rate-limits bots; back off and retry instead of giving up.
+    for attempt in range(6):
+        r = S.get("https://www.wikidata.org/w/api.php", params={**params, "format": "json"}, timeout=30)
+        if r.status_code == 429:
+            time.sleep(5 * (attempt + 1))
+            continue
+        r.raise_for_status()
+        return r.json()
     r.raise_for_status()
     return r.json()
 
@@ -108,6 +115,7 @@ def main() -> int:
             continue
         try:
             hit = find_player(name)
+            time.sleep(0.6)
             if not hit:
                 print(f"  - {name}: no photo")
                 continue
@@ -123,7 +131,7 @@ def main() -> int:
             index[str(pid)] = {"file": f"/players/{dest.name}", "author": info["author"], "license": info["license"], "page": info["page"]}
             found += 1
             print(f"  + {name}: {info['license']} by {info['author'][:40]}")
-            time.sleep(0.3)
+            time.sleep(1.0)
         except Exception as e:  # noqa: BLE001
             print(f"  ! {name}: {e}")
     index_path.write_text(json.dumps(index, indent=1))

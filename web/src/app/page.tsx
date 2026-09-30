@@ -20,6 +20,9 @@ export default async function Landing() {
             {site.name}
           </Link>
           <nav className="flex items-center gap-4 text-sm text-muted">
+            <a href={site.repo} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-text">
+              <GithubIcon width={15} height={15} /> View the code
+            </a>
             <Link href={appHref} className="pill pill-primary">
               <PlayIcon width={14} height={14} /> Open the app
             </Link>
@@ -55,22 +58,12 @@ export default async function Landing() {
         </section>
 
         {/* architecture */}
-        <div className="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-[#161618] lg:-mx-40">
+        <div className="mt-10 mb-16 overflow-hidden rounded-2xl border border-white/10 bg-[#161618] lg:-mx-40">
           <ZoomImage
             src="/architecture-dark.png"
             fullSrc="/architecture.png"
             alt="Architecture: SkillCorner files go through a Python pipeline into a compact bundle, which the Next.js app loads once and renders on a canvas; clips are encoded in their links."
           />
-        </div>
-
-        {/* buttons */}
-        <div className="mt-8 mb-16 flex flex-wrap gap-2.5">
-          <Link href={appHref} className="pill pill-primary">
-            <PlayIcon width={16} height={16} /> Open the app
-          </Link>
-          <a href={site.repo} target="_blank" rel="noreferrer" className="pill">
-            <GithubIcon width={16} height={16} /> View the code
-          </a>
         </div>
 
       </div>

@@ -9,6 +9,11 @@ import { ArrowRightIcon } from "@/components/icons";
 export const metadata: Metadata = { title: `Matches · ${site.name}` };
 export const dynamic = "force-dynamic";
 
+/** "Central Coast Mariners Football Club" reads better as "Central Coast Mariners FC" in a list. */
+function displayName(name: string): string {
+  return name.replace(/\s+Football Club$/i, " FC");
+}
+
 export default async function MatchesPage() {
   const matches = (await loadMatchIndexServer()).sort((a, b) => (a.date ?? "").localeCompare(b.date ?? ""));
 
@@ -49,7 +54,7 @@ export default async function MatchesPage() {
 
                     <div className="flex min-w-0 flex-1 items-center justify-center gap-3">
                       <div className="flex min-w-0 flex-1 items-center justify-end gap-2.5">
-                        <span className="text-right text-[14px] leading-tight font-medium">{m.home.name}</span>
+                        <span className="text-right text-[14px] leading-tight font-medium">{displayName(m.home.name)}</span>
                         <TeamBadge teamId={m.home.id} name={m.home.name} acronym={m.home.short_name.slice(0, 3)} color={m.home.color} size={30} />
                       </div>
                       <span className="rounded-md bg-surface-3 px-2.5 py-1 font-mono text-[15px] font-semibold tabular-nums">
@@ -57,7 +62,7 @@ export default async function MatchesPage() {
                       </span>
                       <div className="flex min-w-0 flex-1 items-center gap-2.5">
                         <TeamBadge teamId={m.away.id} name={m.away.name} acronym={m.away.short_name.slice(0, 3)} color={m.away.color} size={30} />
-                        <span className="text-[14px] leading-tight font-medium">{m.away.name}</span>
+                        <span className="text-[14px] leading-tight font-medium">{displayName(m.away.name)}</span>
                       </div>
                     </div>
 

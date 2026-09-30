@@ -28,12 +28,23 @@ ALIASES = {
     "Melbourne V FC": "Melbourne Victory FC",
     "Melbourne Victory Football Club": "Melbourne Victory FC",
     "CC Mariners": "Central Coast Mariners FC",
+    "Central Coast Mariners Football Club": "Central Coast Mariners FC",
     "Wellington P FC": "Wellington Phoenix FC",
     "Western Sydney": "Western Sydney Wanderers FC",
+    "Western Sydney Wanderers FC": "Western Sydney Wanderers FC",
     "Brisbane FC": "Brisbane Roar FC",
     "Newcastle": "Newcastle Jets FC",
     "Western United": "Western United FC",
+    "Sydney Football Club": "Sydney FC",
+    "Adelaide United Football Club": "Adelaide United FC",
+    "Perth Glory Football Club": "Perth Glory FC",
 }
+
+STOP = {"fc", "football", "club", "united", "city", "the", "afc"}
+
+
+def keywords(name: str) -> list[str]:
+    return [w for w in re.split(r"[^a-z]+", name.lower()) if w and w not in STOP]
 
 
 def api(params: dict) -> dict:
@@ -44,18 +55,29 @@ def api(params: dict) -> dict:
 
 def find_article(name: str) -> str | None:
     q = ALIASES.get(name, name)
+    # exact title first (follows redirects), then search
+    res = api({"action": "query", "titles": q, "redirects": 1})
+    page = next(iter(res["query"]["pages"].values()))
+    if "missing" not in page:
+        return page["title"]
     res = api({"action": "query", "list": "search", "srsearch": f"{q} football club", "srlimit": 3})
     hits = res.get("query", {}).get("search", [])
     return hits[0]["title"] if hits else None
 
 
-def find_logo_file(title: str) -> str | None:
-    res = api({"action": "query", "titles": title, "prop": "images", "imlimit": 50})
+def find_logo_file(title: str, name: str) -> str | None:
+    res = api({"action": "query", "titles": title, "prop": "images", "imlimit": 100})
     page = next(iter(res["query"]["pages"].values()))
     names = [i["title"] for i in page.get("images", [])]
-    good = [n for n in names if re.search(r"logo|crest|badge", n, re.I) and not re.search(r"commons-logo|wiki|icon|flag|symbol|edit", n, re.I)]
-    if not good:
-        good = [n for n in names if n.lower().endswith(".svg") and "flag" not in n.lower() and "commons" not in n.lower()]
+    keys = keywords(ALIASES.get(name, name))
+    # the file name must mention the club and look like a crest
+    good = [
+        n for n in names
+        if any(k in n.lower() for k in keys)
+        and re.search(r"logo|crest|badge|\.svg$", n, re.I)
+        and not re.search(r"commons-logo|wiki|icon|flag|symbol|edit|kit|pictogram|stadium|map", n, re.I)
+    ]
+    good.sort(key=lambda n: (not re.search(r"logo|crest|badge", n, re.I), len(n)))
     return good[0] if good else None
 
 
@@ -91,7 +113,7 @@ def main() -> int:
             continue
         try:
             title = find_article(name)
-            f = find_logo_file(title) if title else None
+            f = find_logo_file(title, name) if title else None
             url = thumb_url(f) if f else None
             if not url:
                 print(f"  - {name}: no crest found ({title})")
