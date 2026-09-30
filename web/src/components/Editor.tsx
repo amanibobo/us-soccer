@@ -10,7 +10,7 @@ import { usePlaybackLoop } from "@/hooks/usePlaybackLoop";
 import { useKeyboard } from "@/hooks/useKeyboard";
 import { PitchCanvas } from "./PitchCanvas";
 import { Controls } from "./Controls";
-import { Scrubber, PHASE_LEGEND } from "./Scrubber";
+import { Scrubber } from "./Scrubber";
 import { ClipPanel } from "./ClipPanel";
 import { SquadPanel } from "./SquadPanel";
 import { MatchHeader } from "./MatchHeader";
@@ -198,25 +198,9 @@ export function Editor({ matchId, initialTime }: Props) {
               </div>
             )}
           </div>
-          <div className="card pb-2">
+          <div className="card pb-1">
             <Controls onClipStart={clipStart} onClipEnd={clipEnd} onClipLast10={clipLast10} onPrevChance={prevChance} onNextChance={nextChance} />
             <Scrubber onPlayClip={playClip} />
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 text-[11px] text-faint">
-              {PHASE_LEGEND.map(([label, color]) => (
-                <span key={label} className="inline-flex items-center gap-1.5">
-                  <span className="inline-block h-1.5 w-3 rounded-sm" style={{ background: color }} /> {label}
-                </span>
-              ))}
-              <span className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-2 w-2 rounded-full bg-danger" /> Goal
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-2 w-[3px] rounded-sm bg-muted" /> Shot
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="hatch inline-block h-2 w-3 rounded-sm bg-surface-3" /> No tracking
-              </span>
-            </div>
           </div>
         </main>
 

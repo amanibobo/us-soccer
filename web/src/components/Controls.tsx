@@ -1,8 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
 import { usePlayback, type Speed } from "@/store/playback";
 import { formatIndexClock, periodAt, periodLabel } from "@/lib/clock";
 import { PauseIcon, PlayIcon, ScissorsIcon, SkipBackIcon, SkipForwardIcon } from "./icons";
+import { PHASE_LABELS } from "./Scrubber";
 
 interface Props {
   onClipStart: () => void;
@@ -21,20 +23,32 @@ export function Controls({ onClipStart, onClipEnd, onClipLast10, onPrevChance, o
   const setSpeed = usePlayback((s) => s.setSpeed);
   const draftStart = usePlayback((s) => s.draftStart);
   const draftEnd = usePlayback((s) => s.draftEnd);
+
+  const frame = Math.floor(time);
+  // What is happening right now: phase of play and who has the ball.
+  const now = useMemo(() => {
+    if (!match) return null;
+    const phase = match.phases.find((p) => frame >= p.i0 && frame <= p.i1);
+    if (!phase) return null;
+    const team = phase.tid === match.meta.home.id ? match.meta.home : match.meta.away;
+    return { label: PHASE_LABELS[phase.type] ?? phase.type, team };
+  }, [match, frame]);
+
   if (!match) return null;
   const meta = match.meta;
   const p = periodAt(meta, time);
   const armed = draftStart != null && draftEnd == null;
+  const inGap = !match.hasPlayers[Math.min(meta.n_frames - 1, Math.max(0, frame))];
 
   return (
-    <div className="flex flex-wrap items-center gap-3 px-3 pt-3">
+    <div className="flex flex-wrap items-center gap-3 px-4 pt-3">
       {/* transport */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5">
         <button className="btn btn-ghost btn-icon" onClick={onPrevChance} title="Previous chance (Shift + ←)" aria-label="Previous chance">
           <SkipBackIcon width={16} height={16} />
         </button>
-        <button className="btn btn-primary btn-icon h-10 w-10 rounded-xl" onClick={toggle} title={playing ? "Pause (Space)" : "Play (Space)"} aria-label={playing ? "Pause" : "Play"}>
-          {playing ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} />}
+        <button className="btn btn-primary btn-icon h-10 w-10 rounded-full" onClick={toggle} title={playing ? "Pause (Space)" : "Play (Space)"} aria-label={playing ? "Pause" : "Play"}>
+          {playing ? <PauseIcon width={18} height={18} /> : <PlayIcon width={18} height={18} className="translate-x-px" />}
         </button>
         <button className="btn btn-ghost btn-icon" onClick={onNextChance} title="Next chance (Shift + →)" aria-label="Next chance">
           <SkipForwardIcon width={16} height={16} />
@@ -42,10 +56,25 @@ export function Controls({ onClipStart, onClipEnd, onClipLast10, onPrevChance, o
       </div>
 
       {/* clock */}
-      <div className="flex items-baseline gap-1.5 font-mono text-sm tabular-nums">
-        <span className="text-[15px] font-semibold">{formatIndexClock(meta, time)}</span>
-        <span className="text-faint">/ {formatIndexClock(meta, meta.n_frames - 1)}</span>
-        <span className="ml-1 font-sans text-xs text-muted">{periodLabel(p.period)}</span>
+      <div className="flex items-baseline gap-1.5 font-mono tabular-nums">
+        <span className="text-[17px] font-semibold tracking-tight">{formatIndexClock(meta, time)}</span>
+        <span className="text-xs text-faint">/ {formatIndexClock(meta, meta.n_frames - 1)}</span>
+      </div>
+
+      {/* now */}
+      <div className="flex h-7 items-center gap-2 rounded-full border border-border bg-surface-2 pr-3 pl-1.5 text-xs">
+        <span className="rounded-full bg-surface px-1.5 py-0.5 text-[11px] text-muted ring-1 ring-border">{periodLabel(p.period)}</span>
+        {inGap ? (
+          <span className="text-muted">No tracking here</span>
+        ) : now ? (
+          <>
+            <span className="h-2 w-2 rounded-full ring-1 ring-black/10" style={{ background: now.team.color }} />
+            <span className="font-medium">{now.team.short_name}</span>
+            <span className="text-muted">{now.label.toLowerCase()}</span>
+          </>
+        ) : (
+          <span className="text-muted">Ball out of play</span>
+        )}
       </div>
 
       {/* speed */}

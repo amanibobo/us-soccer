@@ -214,7 +214,7 @@ body {
 }
 
 .pill {
-  @apply inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-[15px] font-medium text-text transition-colors select-none;
+  @apply inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-text transition-colors select-none;
 }
 .pill:hover {
   @apply bg-white/15;

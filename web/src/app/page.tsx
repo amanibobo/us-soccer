@@ -9,14 +9,16 @@ export default async function Landing() {
 
   return (
     <div className="theme-dark min-h-screen bg-bg text-text">
-      <div className="mx-auto w-full max-w-3xl px-6">
+      {/* keep overscroll dark on this page only */}
+      <style>{`html, body { background: #0d0d0e; }`}</style>
+      <div className="mx-auto w-full max-w-2xl px-6">
         {/* header */}
-        <header className="flex items-center justify-between py-8">
-          <Link href="/" className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
-            <BallLogo size={24} />
+        <header className="flex items-center justify-between py-6">
+          <Link href="/" className="flex items-center gap-2 text-[15px] font-semibold tracking-tight">
+            <BallLogo size={20} />
             {site.name}
           </Link>
-          <nav className="flex items-center gap-5 text-[15px] text-muted">
+          <nav className="flex items-center gap-4 text-sm text-muted">
             <Link href={appHref} className="pill pill-primary">
               <PlayIcon width={14} height={14} /> Open the app
             </Link>
@@ -27,7 +29,7 @@ export default async function Landing() {
         <div className="fade-up aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#161618] shadow-2xl shadow-black/40" />
 
         {/* letter */}
-        <section className="mt-14 space-y-6 text-[19px] leading-relaxed text-muted">
+        <section className="mt-10 space-y-4 text-[15px] leading-relaxed text-muted">
           <p className="font-medium text-text">{site.tagline}</p>
           <p>Hi there,</p>
           <p>
@@ -52,11 +54,11 @@ export default async function Landing() {
         </section>
 
         {/* buttons */}
-        <div className="mt-10 mb-20 flex flex-wrap gap-3">
-          <Link href={appHref} className="pill pill-primary text-base">
+        <div className="mt-8 mb-16 flex flex-wrap gap-2.5">
+          <Link href={appHref} className="pill pill-primary">
             <PlayIcon width={16} height={16} /> Open the app
           </Link>
-          <a href={site.repo} target="_blank" rel="noreferrer" className="pill text-base">
+          <a href={site.repo} target="_blank" rel="noreferrer" className="pill">
             <GithubIcon width={16} height={16} /> View the code
           </a>
         </div>
