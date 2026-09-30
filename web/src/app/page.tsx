@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/config/site";
+import { BallLogo } from "@/components/BallLogo";
 import { GithubIcon, PlayIcon } from "@/components/icons";
 
 export default async function Landing() {
@@ -12,7 +13,7 @@ export default async function Landing() {
         {/* header */}
         <header className="flex items-center justify-between py-8">
           <Link href="/" className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
-            <Logo />
+            <BallLogo size={24} />
             {site.name}
           </Link>
           <nav className="flex items-center gap-5 text-[15px] text-muted">
@@ -78,13 +79,4 @@ function PersonLink({ name, github }: { name: string; github: string }) {
   );
 }
 
-function Logo() {
-  return (
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden>
-      <rect x="1.5" y="4" width="23" height="18" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M13 4v18" stroke="currentColor" strokeWidth="2" />
-      <circle cx="13" cy="13" r="3.5" fill="none" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
 

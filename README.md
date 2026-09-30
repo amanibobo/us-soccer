@@ -1,6 +1,6 @@
 # larpers
 
-**Clip tracking data like video.** Touchline plays a full match of SkillCorner tracking data on a 2D pitch, lets you scrub it like a YouTube video, cut any moment up to 10 seconds into a clip, tag it, and share it with one link.
+**Clip tracking data like video.** larpers plays a full match of SkillCorner tracking data on a 2D pitch, lets you scrub it like a YouTube video, cut any moment up to 10 seconds into a clip, tag it, and share it with one link.
 
 Built for the US Soccer x GSU ColorStack Tech League. Tracking data by [SkillCorner open data](https://github.com/SkillCorner/opendata) (MIT). Player photos from Wikimedia Commons under their individual licenses (credits in `web/src/config/players.json`). Club crests belong to the clubs and are used only to identify the teams.
 

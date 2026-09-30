@@ -1,4 +1,4 @@
-"""Build a Touchline bundle from the four raw SkillCorner files.
+"""Build a larpers bundle from the four raw SkillCorner files.
 
 Usage: python build.py <match_id> --raw <dir with raw files> --out <bundle dir>
 

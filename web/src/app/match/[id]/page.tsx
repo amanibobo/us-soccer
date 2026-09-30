@@ -8,7 +8,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  return { title: `Match ${id} · Touchline` };
+  return { title: `Match ${id} · larpers` };
 }
 
 export default async function MatchPage({ params, searchParams }: Props) {

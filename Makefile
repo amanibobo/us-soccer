@@ -1,4 +1,4 @@
-# Touchline — one command per job.
+# larpers — one command per job.
 #
 #   make data MATCH=2006229     fetch + build a bundle for one match
 #   make fetch MATCH=2006229    download the four raw files only

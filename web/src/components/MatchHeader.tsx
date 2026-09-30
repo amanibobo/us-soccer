@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { MatchMeta } from "@/lib/types";
 import { matchLinks } from "@/config/matches";
 import { site } from "@/config/site";
+import { BallLogo } from "@/components/BallLogo";
 import { TeamBadge } from "./TeamBadge";
 import { KeyboardIcon, YoutubeIcon } from "./icons";
 import type { Overlays } from "@/store/playback";
@@ -24,7 +25,7 @@ export function MatchHeader({ meta, overlays, skipGaps, onOverlay, onSkipGaps, o
   return (
     <header className="flex h-14 items-center gap-4 border-b border-border bg-surface px-4">
       <Link href="/" className="flex items-center gap-2 text-[13px] font-semibold tracking-tight text-text">
-        <Logo /> {site.name}
+        <BallLogo size={18} /> {site.name}
       </Link>
 
       <span className="h-5 w-px bg-border" />
@@ -76,12 +77,3 @@ export function MatchHeader({ meta, overlays, skipGaps, onOverlay, onSkipGaps, o
   );
 }
 
-function Logo() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 26 26" aria-hidden>
-      <rect x="1.5" y="4" width="23" height="18" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path d="M13 4v18" stroke="currentColor" strokeWidth="2" />
-      <circle cx="13" cy="13" r="3.5" fill="none" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}

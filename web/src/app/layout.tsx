@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Touchline",
+  title: "larpers",
   description: "Clip tracking data like video. Scrub a full match of SkillCorner tracking data, cut 10-second clips, and share them with one link.",
 };
 

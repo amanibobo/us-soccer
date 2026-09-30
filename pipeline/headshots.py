@@ -18,7 +18,7 @@ from pathlib import Path
 
 import requests
 
-UA = "Touchline/0.1 (student project; https://github.com/amanibobo/us-soccer)"
+UA = "larpers/0.1 (student project; https://github.com/amanibobo/us-soccer)"
 S = requests.Session()
 S.headers["User-Agent"] = UA
 FOOTBALLER = "Q937857"

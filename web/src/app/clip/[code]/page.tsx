@@ -10,7 +10,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   const clip = decodeClip(code);
-  return { title: clip ? `${clip.title} · Touchline` : "Clip · Touchline", description: clip ? `A ${((clip.end - clip.start) / 10).toFixed(1)} s tracking-data clip` : undefined };
+  return { title: clip ? `${clip.title} · larpers` : "Clip · larpers", description: clip ? `A ${((clip.end - clip.start) / 10).toFixed(1)} s tracking-data clip` : undefined };
 }
 
 export default async function ClipPage({ params }: Props) {

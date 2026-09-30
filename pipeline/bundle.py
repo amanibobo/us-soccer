@@ -1,4 +1,4 @@
-"""Shared pieces of the Touchline bundle format.
+"""Shared pieces of the larpers bundle format.
 
 A bundle is a folder with three files:
 

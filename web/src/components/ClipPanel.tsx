@@ -11,7 +11,7 @@ interface Props {
   onCopied: (msg: string) => void;
 }
 
-const AUTHOR_KEY = "touchline:author";
+const AUTHOR_KEY = "larpers:author";
 
 export function ClipPanel({ onPlayClip, onCopied }: Props) {
   const match = usePlayback((s) => s.match);

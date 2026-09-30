@@ -131,7 +131,7 @@ export function clipPath(c: Clip): string {
 // Phase 1 keeps clips in the browser. A server store can be layered on later
 // without changing the clip shape.
 
-const KEY = (matchId: number) => `touchline:clips:${matchId}`;
+const KEY = (matchId: number) => `larpers:clips:${matchId}`;
 
 export function loadClips(matchId: number): Clip[] {
   try {
