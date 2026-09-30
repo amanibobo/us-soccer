@@ -2,7 +2,7 @@
 
 **Clip tracking data like video.** Touchline plays a full match of SkillCorner tracking data on a 2D pitch, lets you scrub it like a YouTube video, cut any moment up to 10 seconds into a clip, tag it, and share it with one link.
 
-Built for the US Soccer x GSU ColorStack Tech League. Tracking data by [SkillCorner open data](https://github.com/SkillCorner/opendata) (MIT).
+Built for the US Soccer x GSU ColorStack Tech League. Tracking data by [SkillCorner open data](https://github.com/SkillCorner/opendata) (MIT). Player photos from Wikimedia Commons under their individual licenses (credits in `web/src/config/players.json`). Club crests belong to the clubs and are used only to identify the teams.
 
 > Live site: _coming soon_ · Tutorial video: _coming soon_
 
@@ -24,6 +24,12 @@ cd web && npm install && npm run dev
 ```
 
 Open http://localhost:3000.
+
+Optional extras, both in [web/src/config/matches.ts](web/src/config/matches.ts): club crests in `web/public/logos` and a highlights link per match. Player photos come from Wikimedia Commons where a freely licensed one exists:
+
+```bash
+make headshots               # looks up every rostered player on Wikidata, saves photos + credits
+```
 
 ## Swap the match
 
@@ -75,13 +81,13 @@ The browser downloads the bundle once and never talks to a server again while sc
 ## Project structure
 
 ```
-pipeline/   fetch.py (download, LFS-aware), build.py (bundle builder), bundle.py (format + clock), tests/
+pipeline/   fetch.py (download, LFS-aware), build.py (bundle builder), bundle.py (format + clock), headshots.py, tests/
 web/        Next.js app
   src/app/            routes: / (landing), /match/[id] (editor), /clip/[code] (viewer)
-  src/components/     PitchCanvas, Scrubber, Controls, ClipPanel, Editor, ClipViewer, HeroPreview
+  src/components/     PitchCanvas, Scrubber, Controls, ClipPanel, SquadPanel, MatchHeader, Editor, ClipViewer
   src/lib/            bundle loader, render, clock, clip encoding
   src/store/          playback store
-  src/config/site.ts  landing page content: team, video link, default match
+  src/config/         site.ts (landing content), matches.ts (crests, highlight links), players.json (photo credits)
   public/data/        bundles (gitignored)
 data/raw/   downloaded SkillCorner files (gitignored)
 Makefile    make data MATCH=<id>, make test, make dev

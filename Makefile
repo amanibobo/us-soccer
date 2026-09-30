@@ -28,3 +28,6 @@ test:
 
 clean:
 	rm -rf $(OUT)
+
+headshots:
+	uv run --directory pipeline python headshots.py $(patsubst %,../%,$(wildcard web/public/data/*/meta.json)) --out ../web/public/players --index ../web/src/config/players.json

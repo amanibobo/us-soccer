@@ -8,6 +8,7 @@ import { formatIndexClock } from "@/lib/clock";
 import { clipLength, type Clip } from "@/lib/clip";
 import { usePlaybackLoop } from "@/hooks/usePlaybackLoop";
 import { PitchCanvas } from "./PitchCanvas";
+import { TeamBadge } from "./TeamBadge";
 import { ExternalIcon, LinkIcon, PauseIcon, PlayIcon } from "./icons";
 import { site } from "@/config/site";
 
@@ -68,27 +69,37 @@ export function ClipViewer({ clip }: { clip: Clip }) {
   const elapsed = meta ? Math.max(0, Math.min(1, (time - clip.start) / Math.max(1, clip.end - clip.start))) : 0;
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-6">
-      <div className="mb-3 flex items-center justify-between">
-        <Link href="/" className="text-sm font-semibold tracking-tight">
+    <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-5">
+      <div className="mb-5 flex items-center justify-between">
+        <Link href="/" className="text-[13px] font-semibold tracking-tight">
           {site.name}
         </Link>
         {meta && (
-          <div className="text-xs text-muted">
-            {meta.home.short_name} {meta.home.score} - {meta.away.score} {meta.away.short_name}
+          <div className="flex items-center gap-2 text-xs text-muted">
+            <TeamBadge teamId={meta.home.id} name={meta.home.name} acronym={meta.home.acronym} color={meta.home.color} size={18} />
+            <span>{meta.home.short_name}</span>
+            <span className="rounded bg-surface-3 px-1.5 font-mono font-semibold text-text tabular-nums">
+              {meta.home.score} – {meta.away.score}
+            </span>
+            <span>{meta.away.short_name}</span>
+            <TeamBadge teamId={meta.away.id} name={meta.away.name} acronym={meta.away.acronym} color={meta.away.color} size={18} />
           </div>
         )}
       </div>
 
       <h1 className="text-xl font-semibold tracking-tight">{clip.title}</h1>
-      <div className="mt-1 text-sm text-muted">
+      <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-muted">
         {meta && (
-          <>
-            {formatIndexClock(meta, clip.start)} to {formatIndexClock(meta, clip.end)} · {seconds.toFixed(1)} s
-          </>
+          <span className="font-mono">
+            {formatIndexClock(meta, clip.start)} – {formatIndexClock(meta, clip.end)} · {seconds.toFixed(1)} s
+          </span>
         )}
-        {clip.author && <> · by {clip.author}</>}
-        {clip.tags.length > 0 && <> · {clip.tags.join(", ")}</>}
+        {clip.author && <span>· by {clip.author}</span>}
+        {clip.tags.map((t) => (
+          <span key={t} className="chip">
+            {t}
+          </span>
+        ))}
       </div>
       {clip.notes && <p className="mt-2 text-sm">{clip.notes}</p>}
 
@@ -98,11 +109,11 @@ export function ClipViewer({ clip }: { clip: Clip }) {
         ) : !match ? (
           <div className="flex h-full items-center justify-center text-sm text-muted">Loading clip…</div>
         ) : (
-          <div className="relative h-full" onClick={toggle}>
+          <div className="relative h-full cursor-pointer" onClick={toggle}>
             <PitchCanvas interactive={false} />
             {!playing && (
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <div className="rounded-full bg-black/55 p-4 text-white">
+                <div className="rounded-full bg-black/55 p-4 text-white shadow-lg">
                   <PlayIcon width={28} height={28} />
                 </div>
               </div>
@@ -110,19 +121,19 @@ export function ClipViewer({ clip }: { clip: Clip }) {
           </div>
         )}
       </div>
-      <div className="mt-1 h-1 overflow-hidden rounded-full bg-zinc-200">
-        <div className="h-full bg-accent" style={{ width: `${elapsed * 100}%` }} />
+      <div className="mt-2 h-1 overflow-hidden rounded-full bg-surface-3">
+        <div className="h-full bg-ink" style={{ width: `${elapsed * 100}%` }} />
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <button className="btn btn-primary" onClick={toggle} disabled={!match} title="Play or pause (Space)">
-          {playing ? <PauseIcon /> : <PlayIcon />} {playing ? "Pause" : "Play"}
+        <button className="btn btn-primary btn-lg" onClick={toggle} disabled={!match} title="Play or pause (Space)">
+          {playing ? <PauseIcon width={16} height={16} /> : <PlayIcon width={16} height={16} />} {playing ? "Pause" : "Play"}
         </button>
-        <button className="btn" onClick={copy} title="Copy this clip's link">
-          <LinkIcon /> {copied ? "Copied" : "Copy link"}
+        <button className="btn btn-lg" onClick={copy} title="Copy this clip's link">
+          <LinkIcon width={16} height={16} /> {copied ? "Copied" : "Copy link"}
         </button>
-        <Link className="btn" href={`/match/${clip.match_id}?t=${clip.start}`} title="Open the full match at this moment">
-          <ExternalIcon /> Open in full match
+        <Link className="btn btn-lg" href={`/match/${clip.match_id}?t=${clip.start}`} title="Open the full match at this moment">
+          <ExternalIcon width={16} height={16} /> Open in full match
         </Link>
         <span className="ml-auto text-xs text-faint">Loops automatically. Faded players were off camera.</span>
       </div>

@@ -103,7 +103,7 @@ export function Scrubber({ onPlayClip }: Props) {
   const hasDraft = draftStart != null && draftEnd != null;
 
   return (
-    <div className="select-none px-1 pt-3 pb-1">
+    <div className="select-none px-4 pt-2 pb-1">
       <div
         ref={trackRef}
         className="group relative h-10 cursor-pointer"
@@ -117,25 +117,25 @@ export function Scrubber({ onPlayClip }: Props) {
             <div
               key={k}
               title={`${s.goal ? "Goal" : "Shot"}: ${s.name ?? ""} ${formatIndexClock(meta, s.i)}`}
-              className={`absolute top-0 -translate-x-1/2 ${s.goal ? "h-3 w-3 rounded-full bg-danger ring-2 ring-white" : "h-2 w-[3px] rounded-sm bg-zinc-500/70"}`}
+              className={`absolute -translate-x-1/2 ${s.goal ? "top-0 h-2.5 w-2.5 rounded-full bg-danger ring-2 ring-white" : "top-0.5 h-2 w-[3px] rounded-sm bg-muted/60"}`}
               style={{ left: pct(s.i) }}
             />
           ))}
         </div>
 
         {/* main track */}
-        <div className="absolute inset-x-0 top-4 h-2.5 overflow-hidden rounded-full bg-zinc-200">
+        <div className="absolute inset-x-0 top-4 h-2 overflow-hidden rounded-full bg-surface-3">
           {layers.gaps.map(([a, b], k) => (
             <div key={k} className="hatch absolute inset-y-0" style={{ left: pct(a), width: pct(b - a + 1) }} />
           ))}
-          <div className="absolute inset-y-0 left-0 bg-accent/80" style={{ width: pct(time) }} />
+          <div className="absolute inset-y-0 left-0 bg-ink/80" style={{ width: pct(time) }} />
           {hasDraft && (
-            <div className="absolute inset-y-0 bg-amber-400/80" style={{ left: pct(draftStart), width: pct(draftEnd - draftStart) }} />
+            <div className="absolute inset-y-0 bg-clip" style={{ left: pct(draftStart), width: pct(draftEnd - draftStart) }} />
           )}
           {clips.map((c) => (
             <div
               key={c.id}
-              className="absolute inset-y-0 bg-zinc-700/70 hover:bg-zinc-900"
+              className="absolute inset-y-0 bg-accent/80 hover:bg-accent"
               style={{ left: pct(c.start), width: `max(3px, ${pct(c.end - c.start)})` }}
               title={c.title}
               onPointerDown={(e) => {
@@ -150,7 +150,7 @@ export function Scrubber({ onPlayClip }: Props) {
         </div>
 
         {/* phase band */}
-        <div className="absolute inset-x-0 top-7 h-1.5 overflow-hidden rounded-full bg-zinc-100">
+        <div className="absolute inset-x-0 top-[27px] h-1 overflow-hidden rounded-full bg-surface-2 opacity-80">
           {layers.phases.map((p) => (
             <div
               key={p.i}
@@ -164,13 +164,13 @@ export function Scrubber({ onPlayClip }: Props) {
         {hasDraft && (
           <>
             <div
-              className="absolute top-3 h-5 w-3 -translate-x-1/2 cursor-ew-resize rounded-sm border border-white bg-amber-500 shadow"
+              className="absolute top-[13px] h-4 w-2.5 -translate-x-1/2 cursor-ew-resize rounded-[3px] border border-white bg-clip shadow-sm"
               style={{ left: pct(draftStart) }}
               onPointerDown={(e) => begin("start", e)}
               title="Drag to move the clip start"
             />
             <div
-              className="absolute top-3 h-5 w-3 -translate-x-1/2 cursor-ew-resize rounded-sm border border-white bg-amber-500 shadow"
+              className="absolute top-[13px] h-4 w-2.5 -translate-x-1/2 cursor-ew-resize rounded-[3px] border border-white bg-clip shadow-sm"
               style={{ left: pct(draftEnd) }}
               onPointerDown={(e) => begin("end", e)}
               title="Drag to move the clip end"
@@ -180,14 +180,14 @@ export function Scrubber({ onPlayClip }: Props) {
 
         {/* playhead */}
         <div
-          className="pointer-events-none absolute top-[9px] h-5 w-5 -translate-x-1/2 rounded-full border-2 border-white bg-accent shadow transition-transform group-hover:scale-110"
+          className="pointer-events-none absolute top-[10px] h-4 w-4 -translate-x-1/2 rounded-full border-2 border-white bg-ink shadow-md transition-transform group-hover:scale-110"
           style={{ left: pct(time) }}
         />
 
         {/* hover tooltip */}
         {hover != null && !drag && (
           <div
-            className="pointer-events-none absolute -top-7 -translate-x-1/2 rounded bg-zinc-900 px-1.5 py-0.5 font-mono text-[11px] text-white"
+            className="pointer-events-none absolute -top-6 -translate-x-1/2 rounded-md bg-ink px-1.5 py-0.5 font-mono text-[11px] text-white shadow"
             style={{ left: pct(hover) }}
           >
             {formatIndexClock(meta, hover)}
@@ -195,7 +195,7 @@ export function Scrubber({ onPlayClip }: Props) {
         )}
       </div>
 
-      <div className="mt-1 flex items-center justify-between text-[11px] text-muted">
+      <div className="mt-0.5 flex items-center justify-between text-[11px] text-faint">
         <span>{periodLabel(meta.periods[0].period)}</span>
         {meta.periods.length > 1 && <span>{periodLabel(meta.periods[1].period)}</span>}
         <span>Full time</span>
