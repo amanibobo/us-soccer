@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { site, youtubeEmbedUrl } from "@/config/site";
+import { site } from "@/config/site";
 import { GithubIcon, PlayIcon } from "@/components/icons";
 
 export default async function Landing() {
-  const video = youtubeEmbedUrl(site.tutorialVideo);
   const team = site.team.filter((t) => t.name);
   const appHref = `/match/${site.defaultMatch}`;
 
@@ -17,9 +16,6 @@ export default async function Landing() {
             {site.name}
           </Link>
           <nav className="flex items-center gap-5 text-[15px] text-muted">
-            <a href="#tutorial" className="hover:text-text">
-              Tutorial
-            </a>
             <Link href={appHref} className="pill pill-primary">
               <PlayIcon width={14} height={14} /> Open the app
             </Link>
@@ -59,7 +55,7 @@ export default async function Landing() {
         </section>
 
         {/* buttons */}
-        <div className="mt-10 flex flex-wrap gap-3">
+        <div className="mt-10 mb-20 flex flex-wrap gap-3">
           <Link href={appHref} className="pill pill-primary text-base">
             <PlayIcon width={16} height={16} /> Open the app
           </Link>
@@ -68,20 +64,6 @@ export default async function Landing() {
           </a>
         </div>
 
-        {/* video placeholder */}
-        <div id="tutorial" className="mt-14 mb-20 scroll-mt-8 overflow-hidden rounded-2xl border border-white/10 bg-[#161618]">
-          {video ? (
-            <iframe
-              src={video}
-              title={`${site.name} tutorial`}
-              className="aspect-video w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          ) : (
-            <div className="aspect-video w-full" />
-          )}
-        </div>
       </div>
     </div>
   );
